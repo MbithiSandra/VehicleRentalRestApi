@@ -2,39 +2,50 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# In-memory database (for simplicity, will be replaced by real DB in future)
+# In-memory vehicle storage (simulating a database for simplicity)
 vehicles = []
 
-# Home route
-@app.route('/')
-def home():
-    return "Welcome to the Vehicle Rental API! Use /vehicles to interact with the vehicle management system."
+# Vehicle model
+class Vehicle:
+    def __init__(self, name, description, price):
+        self.name = name
+        self.description = description
+        self.price = price
 
-# Endpoint to add a new vehicle
+    def to_dict(self):
+        """Converts the vehicle object to a dictionary."""
+        return {
+            'name': self.name,
+            'description': self.description,
+            'price': self.price
+        }
+
+# API Endpoint to POST (create) a new vehicle
 @app.route('/vehicles', methods=['POST'])
-def create_vehicle():
-    data = request.get_json()
+def add_vehicle():
+    data = request.get_json()  # Get the JSON data from the request body
 
-    # Validate input
-    if not data or 'name' not in data or 'description' not in data or 'price' not in data:
-        return jsonify({'error': 'Bad Request', 'message': 'Missing required fields'}), 400
+    # Check if the required fields are in the incoming data
+    if not data.get('name') or not data.get('description') or not data.get('price'):
+        return jsonify({'error': 'Missing required fields'}), 400
 
-    # Create a new vehicle and add to the list
-    vehicle = {
-        'name': data['name'],
-        'description': data['description'],
-        'price': data['price']
-    }
+    # Create a new vehicle object
+    vehicle = Vehicle(name=data['name'], description=data['description'], price=data['price'])
+
+    # Add the vehicle to the vehicles list (simulating saving to a database)
     vehicles.append(vehicle)
-    
-    return jsonify(vehicle), 201  # Return the created vehicle with a 201 status
 
-# Endpoint to get the list of all vehicles
+    # Return a response indicating the vehicle was created
+    return jsonify({'message': 'Vehicle added successfully'}), 201
+
+# API Endpoint to GET (retrieve) all vehicles
 @app.route('/vehicles', methods=['GET'])
 def get_vehicles():
-    return jsonify(vehicles)
+    # Convert the list of vehicles into a list of dictionaries
+    vehicles_list = [vehicle.to_dict() for vehicle in vehicles]
 
-# Run the app
+    # Return the list of vehicles as JSON
+    return jsonify(vehicles_list), 200
+
 if __name__ == '__main__':
     app.run(debug=True)
-

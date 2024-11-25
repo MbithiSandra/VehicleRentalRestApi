@@ -1,5 +1,10 @@
 {
     "cSpell.words": [
         "jsonify"
-    ]
+    ],
+    "vehicle": {
+        "name": "Sedan",
+        "description": "A comfortable sedan for city driving.",
+        "price": 3000000
+    }
 }
