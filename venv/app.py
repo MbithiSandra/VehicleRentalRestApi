@@ -5,6 +5,11 @@ app = Flask(__name__)
 # In-memory database (for simplicity, will be replaced by real DB in future)
 vehicles = []
 
+# Home route
+@app.route('/')
+def home():
+    return "Welcome to the Vehicle Rental API! Use /vehicles to interact with the vehicle management system."
+
 # Endpoint to add a new vehicle
 @app.route('/vehicles', methods=['POST'])
 def create_vehicle():
@@ -32,3 +37,4 @@ def get_vehicles():
 # Run the app
 if __name__ == '__main__':
     app.run(debug=True)
+
