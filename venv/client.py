@@ -1,5 +1,4 @@
 import requests
-import json
 
 BASE_URL = 'http://127.0.0.1:5000/vehicles'
 
@@ -25,7 +24,7 @@ def get_vehicles():
         vehicles = response.json()
         print("List of Vehicles:")
         for vehicle in vehicles:
-            print(f"Name: {vehicle['name']}, Description: {vehicle['description']}, Price: {vehicle['price']}")
+            print(f"ID: {vehicle['id']}, Name: {vehicle['name']}, Description: {vehicle['description']}, Price: {vehicle['price']}")
     else:
         print("Error:", response.status_code, response.json())
 
@@ -34,3 +33,4 @@ if __name__ == '__main__':
     add_vehicle("SUV", "A spacious SUV for family trips", 4000000)
     add_vehicle("Sedan", "A comfortable sedan for city commutes", 1200000)
     get_vehicles()
+
