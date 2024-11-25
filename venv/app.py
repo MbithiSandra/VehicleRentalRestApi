@@ -16,9 +16,9 @@ def create_vehicle():
 
     # Create a new vehicle and add to the list
     vehicle = {
-        'name': data['Toyota CHR'],
-        'description': data['Compact crossover SUV'],
-        'price': data['3.5 million kenyan shillings']
+        'name': data['name'],
+        'description': data['description'],
+        'price': data['price']
     }
     vehicles.append(vehicle)
     
